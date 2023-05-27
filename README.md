@@ -1,7 +1,8 @@
 # Music Player
 ## TODO
 1. Render songs
-2. Scroll top3. Play / pause / seek
+2. Scroll top
+3. Play / pause / seek
 4. CD rotate
 5. Next / prev
 6. Random
