@@ -1,7 +1,19 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 
+const player = $('.player')
+const cd = $('.cd')
+const cdWidth = cd.offsetWidth
+const heading = $('header h2')
+const cdThumb = $('.cd-thumb')
+const audio = $('#audio')
+const playBtn = $('.btn-toggle-play')
+const progress = $('#progress')
+
 const app = {
+    currentIndex: 0, // current index
+    isPlaying: false,
+
     songs: [
         {
             name: 'the 1',
@@ -61,11 +73,19 @@ const app = {
         $('.playlist').innerHTML = htmls.join('')
     },
 
-    handleEvents: function() {
-        const cd = $('.cd')
-        const cdWidth = cd.offsetWidth
+    defineProperties: function () {
+        Object.defineProperty(this, 'currentSong', {
+            get: function () {
+                return this.songs[this.currentIndex]
+            }
+        })
+    },
 
-        document.onscroll = function() {
+    handleEvents: function () {
+        const _this = this
+
+        // xử lý phóng to / thu nhỏ CD
+        document.onscroll = function () {
             const scrollTop = window.scrollY || document.documentElement.scrollTop // tuong tu nhau
             const newCdWdith = cdWidth - scrollTop
 
@@ -73,11 +93,62 @@ const app = {
             cd.style.width = newCdWdith > 0 ? newCdWdith + 'px' : 0
             cd.style.opacity = newCdWdith / cdWidth
         }
+
+        // xử lý khi click play
+        playBtn.onclick = function () {
+            if (_this.isPlaying) {
+                audio.pause()
+            } else {
+                audio.play()
+            }
+        }
+
+        // khi song được play
+        audio.onplay = function () { 
+            _this.isPlaying = true
+            player.classList.add('playing')
+        }
+
+        // khi song bị pause
+        audio.onpause = function () { 
+            _this.isPlaying = false
+            player.classList.remove('playing')
+        }
+
+        // khi tiến độ bài hát thay đổi
+        audio.ontimeupdate = function () {
+            if (audio.duration) {
+                const progressPercent = Math.floor(audio.currentTime / audio.duration * 100)
+                progress.value = progressPercent
+            }
+        }
+
+        // xử lý khi tua bài hát
+        progress.onchange = function(e) {
+            const seekTime = audio.duration * e.target.value / 100
+            audio.currentTime = seekTime
+        }
     },
 
-    start: function() {
+    loadCurrentSong: function () {
+        heading.textContent = this.currentSong.name
+        cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`
+        audio.src = this.currentSong.path
+
+        // console.log(heading, cdThumb, audio) // test
+    },
+
+    start: function () {
+        // định nghĩa các thuộc tính cho object
+        this.defineProperties()
+
+        // lắng nghe, xử lý các sự kiện (DOM events)
         this.handleEvents()
 
+        // tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
+        this.loadCurrentSong()
+
+        // render playlist
         this.render()
     }
 }
