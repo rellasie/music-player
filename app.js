@@ -84,6 +84,16 @@ const app = {
     handleEvents: function () {
         const _this = this
 
+        // xử lý CD quay / dừng
+        const cdThumbAnimate = cdThumb.animate([
+            { transform: 'rotate(360deg)' }
+        ], {
+            duration: 10000, // 10 seconds
+            iterations: Infinity, // loop vô hạn
+        })
+        
+        cdThumbAnimate.pause()
+
         // xử lý phóng to / thu nhỏ CD
         document.onscroll = function () {
             const scrollTop = window.scrollY || document.documentElement.scrollTop // tuong tu nhau
@@ -107,12 +117,14 @@ const app = {
         audio.onplay = function () { 
             _this.isPlaying = true
             player.classList.add('playing')
+            cdThumbAnimate.play()
         }
 
         // khi song bị pause
         audio.onpause = function () { 
             _this.isPlaying = false
             player.classList.remove('playing')
+            cdThumbAnimate.pause()
         }
 
         // khi tiến độ bài hát thay đổi
@@ -137,6 +149,8 @@ const app = {
 
         // console.log(heading, cdThumb, audio) // test
     },
+
+
 
     start: function () {
         // định nghĩa các thuộc tính cho object
