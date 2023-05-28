@@ -299,9 +299,9 @@ const app = {
         setTimeout(() => {
             $('.song.active').scrollIntoView({
                 behavior: 'smooth',
-                block: 'nearest'
+                block: 'center' // 'nearest' also ok
             })
-        }, 500)
+        }, 300)
     },
 
     start: function () {
