@@ -9,6 +9,8 @@ const cdThumb = $('.cd-thumb')
 const audio = $('#audio')
 const playBtn = $('.btn-toggle-play')
 const progress = $('#progress')
+const prevBtn = $('.btn-prev')
+const nextBtn = $('.btn-next')
 
 const app = {
     currentIndex: 0, // current index
@@ -140,6 +142,18 @@ const app = {
             const seekTime = audio.duration * e.target.value / 100
             audio.currentTime = seekTime
         }
+
+        // khi next bài hát
+        nextBtn.onclick = function () {
+            _this.nextSong()
+            audio.play()
+        }
+
+        // khi prev bài hát
+        prevBtn.onclick = function () {
+            _this.prevSong()
+            audio.play()
+        }
     },
 
     loadCurrentSong: function () {
@@ -150,7 +164,22 @@ const app = {
         // console.log(heading, cdThumb, audio) // test
     },
 
+    nextSong: function() {
+        this.currentIndex++
+        // khi hết bài trước thì nhảy sang bài sau, quay về đầu bài
+        if (this.currentIndex >= this.songs.length) {
+            this.currentIndex = 0
+        }
+        this.loadCurrentSong() // load bài tiếp
+    },
 
+    prevSong: function() {
+        this.currentIndex--
+        if (this.currentIndex < 0) {
+            this.currentIndex = this.songs.length - 1 // trả về phần tử cuối mảng
+        }
+        this.loadCurrentSong() // load bài tiếp
+    },
 
     start: function () {
         // định nghĩa các thuộc tính cho object
