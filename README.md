@@ -1,12 +1,4 @@
 # Music Player
-## TODO
-1. Render songs
-2. Scroll top
-3. Play / pause / seek
-4. CD rotate
-5. Next / prev
-6. Random
-7. Next / Repeat when ended
-8. Active song
-9. Scroll active song into view
-10. Play song when click
+A simple music playing app, built as an exercise for Javascript Programming course by [F8](fullstack.edu.vn).
+## Demo
+<img src="https://github.com/rellasie/musicPlayer/assets/86995253/bad9e8e0-d447-43f6-9d06-e546b3d4da6f" alt="demo" width="30%"/>
