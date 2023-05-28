@@ -11,10 +11,12 @@ const playBtn = $('.btn-toggle-play')
 const progress = $('#progress')
 const prevBtn = $('.btn-prev')
 const nextBtn = $('.btn-next')
+const randomBtn = $('.btn-random')
 
 const app = {
     currentIndex: 0, // current index
     isPlaying: false,
+    isRandom: false,
 
     songs: [
         {
@@ -145,14 +147,28 @@ const app = {
 
         // khi next bài hát
         nextBtn.onclick = function () {
-            _this.nextSong()
+            if (_this.isRandom) {
+                _this.playRandomSong()
+            } else {
+                _this.nextSong()
+            }
             audio.play()
         }
 
         // khi prev bài hát
         prevBtn.onclick = function () {
-            _this.prevSong()
+            if (_this.isRandom) {
+                _this.playRandomSong()
+            } else {
+                _this.prevSong()
+            }
             audio.play()
+        }
+
+        // xử lý bật / tắt random song
+        randomBtn.onclick = function(e) {
+            _this.isRandom = !_this.isRandom
+            randomBtn.classList.toggle('active', _this.isRandom)
         }
     },
 
@@ -179,6 +195,17 @@ const app = {
             this.currentIndex = this.songs.length - 1 // trả về phần tử cuối mảng
         }
         this.loadCurrentSong() // load bài tiếp
+    },
+
+    playRandomSong: function() {
+        let newIndex
+        do {
+            newIndex = Math.floor(Math.random() * this.songs.length)
+        } while (newIndex === this.currentIndex) // ko random lại vào bài hiện tại
+
+        // console.log(newIndex)
+        this.currentIndex = newIndex
+        this.loadCurrentSong()
     },
 
     start: function () {
