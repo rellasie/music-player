@@ -57,6 +57,72 @@ const app = {
             path: './assets/music/mirrorball.mp3',
             image: './assets/img/mirrorball.png'
         },
+        {
+            name: 'seven',
+            singer: 'Taylor Swift',
+            path: './assets/music/seven.mp3',
+            image: './assets/img/seven.png'
+        },
+        {
+            name: 'august',
+            singer: 'Taylor Swift',
+            path: './assets/music/august.mp3',
+            image: './assets/img/august.png'
+        },
+        {
+            name: 'this is me trying',
+            singer: 'Taylor Swift',
+            path: './assets/music/this is me trying.mp3',
+            image: './assets/img/this is me trying.png'
+        },
+        {
+            name: 'mirrorball',
+            singer: 'Taylor Swift',
+            path: './assets/music/mirrorball.mp3',
+            image: './assets/img/mirrorball.png'
+        },
+        {
+            name: 'illicit affairs',
+            singer: 'Taylor Swift',
+            path: './assets/music/illicit affairs.mp3',
+            image: './assets/img/illicit affairs.png'
+        },
+        {
+            name: 'invisible string',
+            singer: 'Taylor Swift',
+            path: './assets/music/invisible string.mp3',
+            image: './assets/img/invisible string.png'
+        },
+        {
+            name: 'mad woman',
+            singer: 'Taylor Swift',
+            path: './assets/music/mad woman.mp3',
+            image: './assets/img/mad woman.png'
+        },
+        {
+            name: 'epiphany',
+            singer: 'Taylor Swift',
+            path: './assets/music/epiphany.mp3',
+            image: './assets/img/epiphany.png'
+        },
+        {
+            name: 'betty',
+            singer: 'Taylor Swift',
+            path: './assets/music/betty.mp3',
+            image: './assets/img/betty.png'
+        },
+        {
+            name: 'peace',
+            singer: 'Taylor Swift',
+            path: './assets/music/peace.mp3',
+            image: './assets/img/peace.png'
+        },
+        {
+            name: 'hoax',
+            singer: 'Taylor Swift',
+            path: './assets/music/hoax.mp3',
+            image: './assets/img/hoax.png'
+        },
     ],
 
     render: function () {
@@ -156,6 +222,7 @@ const app = {
             }
             audio.play()
             _this.render()
+            _this.scrollToActiveSong()
         }
 
         // khi prev bài hát
@@ -167,6 +234,7 @@ const app = {
             }
             audio.play()
             _this.render()
+            _this.scrollToActiveSong()
         }
 
         // xử lý bật / tắt random song
@@ -225,6 +293,15 @@ const app = {
         // console.log(newIndex)
         this.currentIndex = newIndex
         this.loadCurrentSong()
+    },
+
+    scrollToActiveSong: function() {
+        setTimeout(() => {
+            $('.song.active').scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest'
+            })
+        }, 500)
     },
 
     start: function () {
